@@ -1,6 +1,16 @@
 app.factory('AuthService', function($http, $q, Session, localStorageService, $rootScope) {
     var authService = {};
 
+    //seting admin - default user
+     var adminUser = {
+            firstName: "Test",
+            lastName: "User",
+            username: "user",
+            password: "user",
+            role : 'admin'
+        };
+    localStorageService.set("user", adminUser);
+
     authService.login = function(credentials) {
         //attempting to get user from localStorage by his user name
         //if his username existis we ask is his password ok
@@ -26,9 +36,9 @@ app.factory('AuthService', function($http, $q, Session, localStorageService, $ro
     };
 
     authService.isAuthorized = function(authorizedRoles) {
-        
-        var logUserRole = Session.GetCurrentLogUser();
-        if (authorizedRoles.indexOf(logUserRole.userRole) != -1) {
+        //current loged user    
+        var logUser = Session.GetCurrentLogUser();
+        if (authorizedRoles.indexOf(logUser.userRole) != -1) {
             return true 
         };
     };

@@ -1,11 +1,13 @@
-<h1>Hi {{vm.user.firstName}}!</h1>
-<p>You're logged in!!</p>
-<h3>All registered users:</h3>
-<ul>
-    <li ng-repeat="user in vm.allUsers">
-        {{user.username}} ({{firstName}} {{user.lastName}})
-        - <a ng-click="vm.deleteUser(user.id)">Delete</a>
-    </li>
-</ul>
-<p>&nbsp;</p>
-<p><a href="#/login" class="btn btn-primary">Logout</a></p>
+<div class="col-md-6 col-md-offset-3" ng-controller="HomeController">
+    <h1 class="">Home</h1>
+    <h1>Hi <strong> <span style="text-transform:capitalize">{{currentUser.userName}}</span></strong> yours role is <span style="text-transform:capitalize">{{currentUser.userRole}}</span></h1>
+    <p>You're logged In!!</p>
+    <div class="row">
+        <div class="col-md-3 pull-left" ng-show="currentUser.userRole == 'admin'">
+            <a href="#/dashboard" class="btn btn-success">Go to Dashboard</a>
+        </div>
+        <div class="col-md-3 pull-left">
+       		<a href="" ng-click="Logout()" class="btn btn-primary">Logout</a> 	
+        </div>
+    </div>
+</div>

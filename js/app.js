@@ -1,6 +1,7 @@
 var app = angular.module("ManageUsers", [
     'ui.router', 
-    'LocalStorageModule'
+    'LocalStorageModule',
+    'lsalert'
 ]);
 
 //-------------------------------------------------
@@ -25,17 +26,9 @@ app.constant('AUTH_EVENTS', {
 
 app.config(['$stateProvider', '$urlRouterProvider', 'USER_ROLES', function($stateProvider, $urlRouterProvider, USER_ROLES) {
 
-    $urlRouterProvider.when('', '/');
+    $urlRouterProvider.when('', '/login');
 
     $stateProvider
-        .state('home', {
-            url: '/',
-            controller: 'HomeController',
-            templateUrl: 'views/home.view.html',
-            data: {
-                authorizedRoles: [USER_ROLES.admin, USER_ROLES.editor]
-            }
-        })
         .state('login', {
             url: '/login',
             controller: 'LoginController',
@@ -53,6 +46,22 @@ app.config(['$stateProvider', '$urlRouterProvider', 'USER_ROLES', function($stat
             }
 
         })
+        .state('home', {
+            url: '/home',
+            controller: 'HomeController',
+            templateUrl: 'views/home.view.html',
+            data: {
+                authorizedRoles: [USER_ROLES.admin, USER_ROLES.editor, USER_ROLES.guest]
+            }
+        })
+        .state('dashboard', {
+            url: '/dashboard',
+            controller: 'DashboardController',
+            templateUrl: 'views/dashboard.view.html',
+            data: {
+                authorizedRoles: [USER_ROLES.admin]
+            }
+        })
 }]);
 
 //------------------------------------------------------------
@@ -62,6 +71,7 @@ app.run(function($rootScope, AUTH_EVENTS, AuthService) {
     $rootScope.$on('$stateChangeStart', function(event, next) {
         var authorizedRoles = next.data.authorizedRoles;
         //console.log(AuthService.isAuthorized(authorizedRoles));
+        if(!(next.name == 'register' || next.name == 'login'))
         if (!AuthService.isAuthorized(authorizedRoles)) {
             event.preventDefault();
             if (AuthService.isAuthenticated()) {
