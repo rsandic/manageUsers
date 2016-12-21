@@ -7,6 +7,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Manage Users</title>
     <!-- Bootstrap -->
+    <!-- <link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css"> -->
     <link href="css/main.css" rel="stylesheet">
 </head>
 
@@ -39,10 +40,9 @@
 </body>
 <div class="container">
     <div ui-view>
-        
     </div>
     <ls-uib-alert dismiss-on-timeout='1000' type="{{alerts.type}}" close="closeAlert()" ng-show="alertsShow">{{alerts.msg}}
-            </ls-uib-alert>
+    </ls-uib-alert>
 </div>
 
 </html>

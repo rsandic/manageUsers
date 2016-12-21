@@ -3,7 +3,7 @@ app.controller('LoginController', ["$rootScope", "$scope", "AuthService", "AUTH_
         //console.log(AuthService);
         $scope.login = function(credentials) {
             AuthService.login(credentials).then(function(user) {
-            	console.log(user);
+            	//console.log(user);
                 //$rootScope.$broadcast(AUTH_EVENTS.loginSuccess);
                 //setting current user    
                 $scope.SetCurrentUser(user);

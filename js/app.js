@@ -62,6 +62,14 @@ app.config(['$stateProvider', '$urlRouterProvider', 'USER_ROLES', function($stat
                 authorizedRoles: [USER_ROLES.admin]
             }
         })
+        .state('edit', {
+            url: '/register/:username',
+            controller: 'RegisterController',
+            templateUrl: 'views/register.view.html',
+            data: {
+                authorizedRoles: [USER_ROLES.admin]
+            }
+        })
 }]);
 
 //------------------------------------------------------------
