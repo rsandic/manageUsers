@@ -5,6 +5,7 @@ app.controller('HomeController', ["$rootScope", "$scope", "AuthService", "AUTH_E
 
         $scope.Logout = function() {
             localStorageService.cookie.set('currentUser', {});
+            $rootScope.$broadcast(AUTH_EVENTS.logoutSuccess);
             $state.go('login');
         }
     }

@@ -23,7 +23,7 @@
             <input type="text" name="password" id="password" class="form-control" ng-model="user.password" autocomplete="off" required />
             <span ng-show="form.password.$dirty && form.password.$error.required" class="help-block">Password is required</span>
         </div>
-        <div ng-show="pageState == 'edit'" class="form-group" ng-class="{ 'has-error': form.password.$dirty && form.password.$error.required }">
+        <div ng-show="pageState == 'edit' && logUser.userRole == 'admin'" class="form-group" ng-class="{ 'has-error': form.password.$dirty && form.password.$error.required }">
             <label for="role">Role</label>
             <select name="" id="" id="role" class="form-control" ng-model="user.role">
                 <option value="guest">Guset</option>
@@ -35,9 +35,10 @@
         </div>
         <div class="form-actions">
             <button type="submit" ng-disabled="form.$invalid || dataLoading" class="btn btn-primary"><span ng-show="pageState == 'new'">Register</span>
-            <span ng-show="pageState == 'edit'">Edit</span>
+            <span ng-show="pageState == 'edit'">Save</span>
             </button>
-            <a href="#/login" class="btn btn-link">Cancel</a>
+            <a href="#/login" class="btn btn-link" ng-show="pageState == 'new'">Cancel</a>
+            <a href="#/home" class="btn btn-link" ng-show="pageState == 'edit'">Back to Home</a>
         </div>
     </form>
 </div>

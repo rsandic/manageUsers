@@ -1,37 +1,30 @@
-app.controller('LoginController', ["$rootScope", "$scope", "AuthService", "AUTH_EVENTS",'$state','AlertService', 
+app.controller('LoginController', ["$rootScope", "$scope", "AuthService", "AUTH_EVENTS", '$state', 'AlertService',
     function($rootScope, $scope, AuthService, AUTH_EVENTS, $state, AlertService) {
-        //console.log(AuthService);
+        //$scope.alertsShow = false;
+
+        //if user is log show notidication
+        $scope.isLogUser = AuthService.isAuthenticated();
+
         $scope.login = function(credentials) {
             AuthService.login(credentials).then(function(user) {
-            	//console.log(user);
-                //$rootScope.$broadcast(AUTH_EVENTS.loginSuccess);
                 //setting current user    
                 $scope.SetCurrentUser(user);
-                AlertService.alertsShow = true;
-                $scope.showNotification('danger', 'Border width style can only be between 1 and 10px.');
             }, function(result) {
-                console.log(result);
                 $rootScope.$broadcast(AUTH_EVENTS.loginFailed);
             });
         };
 
-        $scope.SetCurrentUser = function(user){
+        $scope.SetCurrentUser = function(user) {
             $rootScope.currentUser = user;
-            //when user register go to login, add notification
-            //session will expire when user refresh page, because we put user in rootScope
-            $state.go('home');
+            $rootScope.$broadcast(AUTH_EVENTS.loginSuccess);
+            $state.go('home')
         }
 
 
-        $scope.$on('handleAlertBroadcast', function () {
-            $scope.alertsShow = AlertService.getAlertShowState();
-            $scope.alerts = AlertService.getAlerts();
-
-        });
-
-
-        $scope.showNotification = function (type, msg) {
-            AlertService.addAlertWithTime(type, msg, 4000);
-        };
+        if ($scope.isLogUser.userName) {
+            //if user is log in redirect him on home page
+            $rootScope.$broadcast(AUTH_EVENTS.loginSuccess);
+            $state.go('home')
+        }
     }
 ]);
