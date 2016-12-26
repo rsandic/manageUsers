@@ -46,6 +46,7 @@ app.controller('RegisterController', ["$rootScope", "$scope", "localStorageServi
                 //changing current logged user, if he changin 
                 //Session.SetCurrentLogUser($scope.username, $scope.role);
                 $rootScope.$broadcast(AUTH_EVENTS.editSuccess);
+                $state.go('home');
             }
 
         };
