@@ -5,7 +5,7 @@ app.controller('DashboardController', ["$rootScope", "$scope", "AuthService", "A
         $scope.arrayOfAllUserData = [];
 
         $scope.listOfUsers = localStorageService.keys();
-        console.log($scope.listOfUsers);
+        //console.log($scope.listOfUsers);
 
 
         //---------------------------------------

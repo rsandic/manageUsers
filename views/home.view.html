@@ -1,6 +1,9 @@
-<div class="col-md-6 col-md-offset-3" ng-controller="HomeController">
+<div class="col-md-6 col-md-offset-3">
     <h1 class="">Home</h1>
-    <h1>Hi <strong> <span style="text-transform:capitalize">{{currentUser.userName}}</span></strong> yours role is <span style="text-transform:capitalize">{{currentUser.userRole}}</span></h1>
+    <h1>Hi {{userDeatils.firstName}} {{userDeatils.lastName}} </h1> 
+    <h2>Yours user name is<strong> <span>{{userDeatils.username}},</span></strong> </br> Role is {{userDeatils.role}},</span> </br>Email is {{userDeatils.email}} </h2>
+    <h3>Date of registration {{userDeatils.dateOfRegistration | date:'medium'}}</h3>
+    <h3 ng-show="userDeatils.lastChangeDate">Date of last change {{userDeatils.lastChangeDate | date:'medium'}}</h3>
     <p>You're logged In!!</p>
     <div class="row">
         <div class="col-md-3 pull-left" ng-show="currentUser.userRole == 'admin'">

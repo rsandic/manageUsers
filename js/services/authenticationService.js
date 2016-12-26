@@ -1,20 +1,23 @@
 app.factory('AuthService', function($http, $q, Session, localStorageService, $rootScope) {
     var authService = {};
 
-    //seting admin - default user
-     var adminUser = {
-            firstName: "Test",
-            lastName: "User",
-            username: "user",
-            password: "user",
-            role : 'admin'
-        };
+    //seting admin - default user, 
+    var adminUser = {
+        firstName: "Default",
+        lastName: "Admin",
+        username: "user",
+        password: "user",
+        email : "user@gmail.com",
+        role: 'admin',
+        dateOfRegistration: new Date("2016-12-25T12:00:00Z").getTime(),
+        lastChangeDate: null
+    };
     localStorageService.set("user", adminUser);
 
     authService.login = function(credentials) {
         //attempting to get user from localStorage by his user name
         //if his username existis we ask is his password ok
-        var userToCheck = getUserByUserName(credentials.username);
+        var userToCheck = authService.getUserByUserName(credentials.username);
         if (userToCheck != null && userToCheck.password == credentials.password) {
             //storing current user in cookie 
             Session.SetCurrentLogUser(userToCheck.username, userToCheck.role);
@@ -27,11 +30,13 @@ app.factory('AuthService', function($http, $q, Session, localStorageService, $ro
     };
 
     //funkcija koja iz localStorige vraca user-a , userName se koristi kao key
-    function getUserByUserName(userName) {
+    authService.getUserByUserName = function(userName) {
+        //geting user by user name from localstorage
         return localStorageService.get(userName);
     }
 
     authService.isAuthenticated = function() {
+        //get current user, how is stored in cookie
         return Session.GetCurrentLogUser();
     };
 
@@ -39,8 +44,13 @@ app.factory('AuthService', function($http, $q, Session, localStorageService, $ro
         //current loged user    
         var logUser = Session.GetCurrentLogUser();
         if (authorizedRoles.indexOf(logUser.userRole) != -1) {
-            return true 
+            return true
         };
+    };
+
+    //retutning current session user from cookie
+    authService.getSessionUser = function() {
+        return Session.GetCurrentLogUser()
     };
 
     return authService;

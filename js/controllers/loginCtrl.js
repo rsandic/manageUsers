@@ -7,7 +7,7 @@ app.controller('LoginController', ["$rootScope", "$scope", "AuthService", "AUTH_
 
         $scope.login = function(credentials) {
             AuthService.login(credentials).then(function(user) {
-                //setting current user    
+                //setting current user  
                 $scope.SetCurrentUser(user);
             }, function(result) {
                 $rootScope.$broadcast(AUTH_EVENTS.loginFailed);
@@ -15,15 +15,17 @@ app.controller('LoginController', ["$rootScope", "$scope", "AuthService", "AUTH_
         };
 
         $scope.SetCurrentUser = function(user) {
-            $rootScope.currentUser = user;
+            //$rootScope.currentUser = user;
+            //Boradcats event when user is succes loged in
             $rootScope.$broadcast(AUTH_EVENTS.loginSuccess);
-            $state.go('home')
+            //go to home page to see user details
+            $state.go('home');
         }
-
-
-        if ($scope.isLogUser.userName) {
-            //if user is log in redirect him on home page
+        
+        //if user is log in redirect him on home page
+        if ($scope.isLogUser && AuthService.getSessionUser().userName != undefined) {
             $rootScope.$broadcast(AUTH_EVENTS.loginSuccess);
+            //go to home page
             $state.go('home')
         }
     }
