@@ -23,6 +23,8 @@ app.constant('AUTH_EVENTS', {
     guest: 'guest'
 });
 
+
+
 //-------------------------------------------------
 //routing
 
